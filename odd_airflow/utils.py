@@ -1,9 +1,9 @@
-import os
+import inspect
+
 import sqlparse
 from sqlparse.sql import T, TokenList, Parenthesis, Identifier, IdentifierList
 from sqlparse.tokens import Punctuation
 
-from . import settings
 from .extractors import PostgresExtractor
 
 def _is_in_table(token):
@@ -128,3 +128,20 @@ def get_transformer_name(dag_id: str, task_id: str) -> str:
 
 def get_transformer_run_name(run_id: str, task_id: str) -> str:
     return f"{run_id}.{task_id}"
+
+def get_props(obj, exclude_list: list = None) -> dict:
+    response = {}
+    for name in dir(obj):
+        if name not in exclude_list and not name.startswith('__') and not name.startswith('_'):
+            try:
+                value = getattr(obj, name)
+                if not inspect.ismethod(value):
+                    if isinstance(value, set):
+                        response[name] = list(value)
+                    elif not isinstance(value, (int, str, list, dict, bool)):
+                        response[name] = str(value)
+                    else:
+                        response[name] = value
+            except:
+                continue
+    return response

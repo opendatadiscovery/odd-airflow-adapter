@@ -1,6 +1,6 @@
-from .. import settings
-
 from oddrn import Generator
+
+from .. import settings
 
 generator = Generator(data_source=settings.POSTGRES_SOURCE, cloud=settings.CLOUD)
 

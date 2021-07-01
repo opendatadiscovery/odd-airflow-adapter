@@ -14,7 +14,7 @@ extras_require = {}
 
 setup(
     name="odd_airflow",
-    version="0.0.7",
+    version="0.0.9",
     description="ODD adapter to Airflow",
     long_description=readme,
     long_description_content_type="text/markdown",

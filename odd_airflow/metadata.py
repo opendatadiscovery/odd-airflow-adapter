@@ -33,8 +33,8 @@ class Metadata:
 
     def _get_transformer_metadata(self, operator: BaseOperator):
         exclude_list = [
-            "log", "logger", "owner", "sql", "ui_color", "ui_fgcolor", "dag", "dag_id",
-            "template_fields", "template_ext", "start_date", "end_date", "doc_md", "deps"
+            "log", "logger", "owner", "sql", "ui_color", "ui_fgcolor", "dag", "dag_id", "downstream_list",
+            "upstream_list", "template_fields", "template_ext", "start_date", "end_date", "doc_md", "deps"
         ]
         self.metadata = get_props(operator, exclude_list)
 

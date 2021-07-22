@@ -49,6 +49,7 @@ class DAG(DAG, LoggingMixin):
                     ti for ti in dagrun.get_task_instances(session=session)
                     if ti.task_id == task_id
                 )
+                session.expunge(task_instance)  # Extract object from session for later use
                 transformer_runs.append(self._add_run(dagrun, operator, task_instance))
             self._send_data(transformer_runs)
         except Exception as e:

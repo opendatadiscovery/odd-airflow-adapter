@@ -1,6 +1,6 @@
 ## ODD Airflow adapter
 
-ODD Airflow adapter is used for extracting data transformers and and data transformers runs info and metadata from Apache Airflow (versions up to 1.10.15). This adapter is implemetation of push model (see more https://github.com/opendatadiscovery/opendatadiscovery-specification/blob/main/specification/specification.md#discovery-models). After installation, your Airflow will push new data transformer on DAG creation, and data transformer runs on every DAG run.
+ODD Airflow adapter is used for extracting data transformers and data transformers runs info and metadata from Apache Airflow (versions up to 1.10.15). This adapter is implemetation of push model (see more https://github.com/opendatadiscovery/opendatadiscovery-specification/blob/main/specification/specification.md#discovery-models). After installation, your Airflow will push new data transformer on DAG creation, and data transformer runs on every DAG run.
 This service based on Python Flask and Connexion frameworks with APScheduler.
 
 #### Data entities:

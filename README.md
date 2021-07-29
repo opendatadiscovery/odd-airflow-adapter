@@ -46,7 +46,7 @@ All configuration must be inside default_args parameter of DAG()
 ```Python
 {
 	"data_catalog_host": "https://yourcatalog.url/ingestion", # Data catalog ingestion API url
-  # You must specify one of - "cloud" or "hosts" params for ODDRN generation
+  	# You must specify one of - "cloud" or "hosts" params for ODDRN generation
 	"cloud": {
 		"type": "aws",   # Type of cloud (AWS by default)
 		"account": "account_id", # Specify account_id

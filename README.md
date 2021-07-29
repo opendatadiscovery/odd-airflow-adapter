@@ -13,9 +13,9 @@ For more information about data entities see https://github.com/opendatadiscover
 
 ## Quickstart
 #### Installation
-'''
+```
 pip3 install odd-airflow
-'''
+```
 #### Usage
 ```Python
 from odd_airflow import DAG

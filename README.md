@@ -51,8 +51,8 @@ All configuration must be inside default_args parameter of DAG()
 		"type": "aws",   # Type of cloud (AWS by default)
 		"account": "account_id", # Specify account_id
 		"region": "region_id" # Specify region_id
-	}
-  "hosts": ["192.168.0.1", "192.168.0.2"] # Host or hosts of Airflow source
+	},
+  	"hosts": ["192.168.0.1", "192.168.0.2"] # Host or hosts of Airflow source
 }
 ```
 

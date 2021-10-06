@@ -32,7 +32,7 @@ with DAG(
     schedule_interval="@once",
     catchup=False,
     default_args={
-        "data_catalog_url": "http://docker.for.mac.localhost:8080/ingestion/entities",
+        "data_catalog_url": "http://localhost:8080/ingestion/entities",
         "unit_id": "my_airflow_unit_id"
     }
 ) as dag:
@@ -42,11 +42,11 @@ with DAG(
         mysql_conn_id="mysql_default",
         sql="""
             CREATE TABLE IF NOT EXISTS pet (
-            pet_id SERIAL PRIMARY KEY,
-            name VARCHAR NOT NULL,
-            pet_type VARCHAR NOT NULL,
+            pet_id INT AUTO_INCREMENT PRIMARY KEY,
+            name VARCHAR(255) NOT NULL,
+            pet_type VARCHAR(255) NOT NULL,
             birth_date DATE NOT NULL,
-            owner VARCHAR NOT NULL);
+            owner VARCHAR(255) NOT NULL);
           """,
     )
     # [END mysql_operator_howto_guide_create_pet_table]

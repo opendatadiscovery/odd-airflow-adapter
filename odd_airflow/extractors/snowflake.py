@@ -4,10 +4,6 @@ from odd_airflow.extractors.base import BaseExtractor
 from odd_airflow.extractors.sql_mixin import SqlMixin
 from oddrn import Generator
 
-from .. import settings
-
-generator = Generator(data_source=settings.SNOWFLAKE_SOURCE)
-
 class SnowflakeExtractor(BaseExtractor, SqlMixin):
 
     @classmethod
@@ -20,7 +16,7 @@ class SnowflakeExtractor(BaseExtractor, SqlMixin):
         warehouse = task.warehouse or connection.warehouse
         database = task.database or connection.database
         schema = task.schema or connection.schema
-        generator = Generator(data_source=settings.POSTGRES_SOURCE, host=f"{connection.account}.{connection.region}.snowflakecomputing.com")
+        generator = Generator(data_source='snowflake', host=f"{connection.account}.{connection.region}.snowflakecomputing.com")
         for table in tables:
             oddrn = generator.get_table(warehouse_name=warehouse, database_name=database, schema_name=schema, table_name=table)
             response.append(oddrn)

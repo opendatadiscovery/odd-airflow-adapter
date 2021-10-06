@@ -4,19 +4,20 @@ from odd_airflow.extractors.base import BaseExtractor
 from odd_airflow.extractors.sql_mixin import SqlMixin
 from oddrn import Generator
 
-from .. import settings
-
 class HiveExtractor(BaseExtractor, SqlMixin):
 
     @classmethod
     def get_operator_classnames(cls) -> List[str]:
         return ['HiveOperator']
 
+    def get_query(self, operator):
+        return operator.hql
+
     def get_oddrn_list(self, task, tables):
         response = []
-        connection = self.get_connection(task.postgres_conn_id)
-        generator = Generator(data_source=settings.HIVE_SOURCE, host=f"{connection.host}:{connection.port}")
-        database = task.database or connection.schema
+        connection = self.get_connection(task.hive_cli_conn_id)
+        generator = Generator(data_source='hive', host=f"{connection.host}:{connection.port}")
+        database = connection.schema
         for table in tables:
             source = table.split(".")
             if len(source) > 1:

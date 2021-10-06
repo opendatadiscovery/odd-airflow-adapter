@@ -3,8 +3,6 @@ from odd_airflow.extractors.base import BaseExtractor
 from odd_airflow.extractors.sql_mixin import SqlMixin
 from oddrn import Generator
 
-from .. import settings
-
 class MySqlExtractor(BaseExtractor, SqlMixin):
 
     @classmethod
@@ -14,7 +12,7 @@ class MySqlExtractor(BaseExtractor, SqlMixin):
     def get_oddrn_list(self, task, tables):
         response = []
         connection = self.get_connection(task.mysql_conn_id)
-        generator = Generator(data_source=settings.MYSQL_SOURCE, host=f"{connection.host}:{connection.port}")
+        generator = Generator(data_source='mysql', host=f"{connection.host}:{connection.port}")
         database = task.database or connection.schema
         for table in tables:
             source = table.split(".")

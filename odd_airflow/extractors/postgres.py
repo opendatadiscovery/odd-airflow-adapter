@@ -4,8 +4,6 @@ from odd_airflow.extractors.base import BaseExtractor
 from odd_airflow.extractors.sql_mixin import SqlMixin
 from oddrn import Generator
 
-from .. import settings
-
 class PostgresExtractor(BaseExtractor, SqlMixin):
 
     @classmethod
@@ -15,7 +13,7 @@ class PostgresExtractor(BaseExtractor, SqlMixin):
     def get_oddrn_list(self, task, tables):
         response = []
         connection = self.get_connection(task.postgres_conn_id)
-        generator = Generator(data_source=settings.POSTGRES_SOURCE, host=f"{connection.host}:{connection.port}")
+        generator = Generator(data_source='postgresql', host=f"{connection.host}:{connection.port}")
         database = task.database or connection.schema
         for table in tables:
             source = table.split(".")

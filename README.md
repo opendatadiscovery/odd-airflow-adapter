@@ -44,3 +44,11 @@ AIRFLOW_UNIT_ID=airflow_unit_id
 ## Requirements
 - Python 3.8
 - Airflow  <= 1.10.15
+
+## Run demo
+
+```
+  docker-compose -f docker/docker-compose.yml up
+```
+
+Airflow UI will be available at localhost:8081

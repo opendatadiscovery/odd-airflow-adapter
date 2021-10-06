@@ -12,8 +12,8 @@ services:
       - PGDATA=/var/lib/postgresql/data/pgdata
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-      - ./docker/database/data:/var/lib/postgresql/data/pgdata
-      - ./docker/database/logs:/var/lib/postgresql/data/log
+      - ./database/data:/var/lib/postgresql/data/pgdata
+      - ./database/logs:/var/lib/postgresql/data/log
     command: >
      postgres
        -c listen_addresses=*
@@ -33,54 +33,6 @@ services:
     command: mysqld --character-set-server=utf8 --collation-server=utf8_unicode_ci
     networks:
       - airflow
-  # Hive
-  namenode:
-    image: bde2020/hadoop-namenode:2.0.0-hadoop2.7.4-java8
-    volumes:
-      - namenode:/hadoop/dfs/name
-    environment:
-      - CLUSTER_NAME=test
-    env_file:
-      - ./docker/hadoop-hive.env
-    ports:
-      - "50070:50070"
-  datanode:
-    image: bde2020/hadoop-datanode:2.0.0-hadoop2.7.4-java8
-    volumes:
-      - datanode:/hadoop/dfs/data
-    env_file:
-      - ./docker/hadoop-hive.env
-    environment:
-      SERVICE_PRECONDITION: "namenode:50070"
-    ports:
-      - "50075:50075"
-  hive-server:
-    image: bde2020/hive:2.3.2-postgresql-metastore
-    volumes:
-      - ./docker/files:/opt/hive/files
-      - ./docker/files:/hive/files
-    env_file:
-      - ./docker/hadoop-hive.env
-    environment:
-      HIVE_CORE_CONF_javax_jdo_option_ConnectionURL: "jdbc:postgresql://hive-metastore/metastore"
-      SERVICE_PRECONDITION: "hive-metastore:9083"
-    ports:
-      - "10000:10000"
-  hive-metastore:
-    image: bde2020/hive:2.3.2-postgresql-metastore
-    env_file:
-      - ./docker/hadoop-hive.env
-    command: /opt/hive/bin/hive --service metastore
-    environment:
-      SERVICE_PRECONDITION: "namenode:50070 datanode:50075 hive-metastore-postgresql:5432"
-    ports:
-      - "9083:9083"
-  hive-metastore-postgresql:
-    image: bde2020/hive-metastore-postgresql:2.3.0
-  presto-coordinator:
-    image: shawnzhu/prestodb:0.181
-    ports:
-      - "8080:8080"
   redis:
     image: redis:5.0.5
     environment:
@@ -92,18 +44,15 @@ services:
       - airflow
   webserver:
     env_file:
-      - ./docker/.env
-    build:
-      context: ./
-      dockerfile: Dockerfile.dev
-    image: odd_airflow:dev
+      - .env
+    build: ./
+    image: odd_airflow:local
     ports:
       - 8081:8080
     volumes:
-      - ./docker/dags:/opt/airflow/dags
-      - ./odd_airflow:/opt/airflow/lib/odd_airflow
-      - ./docker/logs:/opt/airflow/logs
-      - ./docker/files:/opt/airflow/files
+      - ./dags:/opt/airflow/dags
+      - ./logs:/opt/airflow/logs
+      - ./files:/opt/airflow/files
       - /var/run/docker.sock:/var/run/docker.sock
     deploy:
       restart_policy:
@@ -123,9 +72,9 @@ services:
     networks:
       - airflow
   flower:
-    image: odd_airflow:dev
+    image: odd_airflow:local
     env_file:
-      - ./docker/.env
+      - .env
     ports:
       - 5555:5555
     depends_on:
@@ -136,19 +85,18 @@ services:
         delay: 8s
         max_attempts: 3
     volumes:
-      - ./docker/logs:/opt/airflow/logs
+      - ./logs:/opt/airflow/logs
     command: flower
     networks:
       - airflow
   scheduler:
-    image: odd_airflow:dev
+    image: odd_airflow:local
     env_file:
-      - ./docker/.env
+      - .env
     volumes:
-      - ./docker/dags:/opt/airflow/dags
-      - ./odd_airflow:/opt/airflow/lib/odd_airflow
-      - ./docker/logs:/opt/airflow/logs
-      - ./docker/files:/opt/airflow/files
+      - ./dags:/opt/airflow/dags
+      - ./logs:/opt/airflow/logs
+      - ./files:/opt/airflow/files
       - /var/run/docker.sock:/var/run/docker.sock
     command: scheduler
     depends_on:
@@ -163,14 +111,13 @@ services:
     networks:
       - airflow
   worker:
-    image: odd_airflow:dev
+    image: odd_airflow:local
     env_file:
-      - ./docker/.env
+      - .env
     volumes:
-      - ./docker/dags:/opt/airflow/dags
-      - ./odd_airflow:/opt/airflow/lib/odd_airflow
-      - ./docker/logs:/opt/airflow/logs
-      - ./docker/files:/opt/airflow/files
+      - ./dags:/opt/airflow/dags
+      - ./logs:/opt/airflow/logs
+      - ./files:/opt/airflow/files
       - /var/run/docker.sock:/var/run/docker.sock
     command: worker
     depends_on:
@@ -183,14 +130,13 @@ services:
     networks:
       - airflow
   initdb:
-    image: odd_airflow:dev
+    image: odd_airflow:local
     env_file:
-      - ./docker/.env
+      - .env
     volumes:
-      - ./docker/dags:/opt/airflow/dags
-      - ./odd_airflow:/opt/airflow/lib/odd_airflow
-      - ./docker/logs:/opt/airflow/logs
-      - ./docker/files:/opt/airflow/files
+      - ./dags:/opt/airflow/dags
+      - ./logs:/opt/airflow/logs
+      - ./files:/opt/airflow/files
       - /var/run/docker.sock:/var/run/docker.sock
     entrypoint: /bin/bash
     deploy:
@@ -205,7 +151,6 @@ services:
       - mysql
     networks:
       - airflow
-
 
 volumes:
   namenode:

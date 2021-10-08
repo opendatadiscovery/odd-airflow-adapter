@@ -6,7 +6,7 @@ with open("README.md") as readme_file:
 requirements = [
     "attrs>=19.3",
     "requests>=2.24.0",
-    "sqlparse==0.4.1",
+    "sqlparse==0.4.2",
     "oddrn==0.0.8"
 ]
 

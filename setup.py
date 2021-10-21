@@ -7,14 +7,14 @@ requirements = [
     "attrs>=19.3",
     "requests>=2.24.0",
     "sqlparse==0.4.2",
-    "oddrn>=0.0.3"
+    "oddrn==0.0.8"
 ]
 
 extras_require = {}
 
 setup(
     name="odd_airflow",
-    version="0.1.0",
+    version="0.1.1",
     description="ODD adapter to Airflow",
     long_description=readme,
     long_description_content_type="text/markdown",

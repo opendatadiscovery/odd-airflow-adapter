@@ -1,0 +1,22 @@
+from airflow.models import BaseOperator
+from odd_airflow.utils import *
+
+class SqlMixin:
+    def get_query(self, operator):
+        return operator.sql
+
+    def extract_transformer_data(self, operator: BaseOperator):
+        sql = ""
+        try:
+            sql = self.get_query(operator)
+            sql_parser = Parser(self, operator, sql)
+            inputs, outputs = sql_parser.get_response()
+        except AttributeError:
+            self.log.error(f"Unable to get inputs and outputs for operator {operator.__class__.__name__}")
+            inputs, outputs = [], []
+        return {
+                "source_code_url": "source",
+                "sql": sql,
+                "inputs": inputs,
+                "outputs": outputs
+            }

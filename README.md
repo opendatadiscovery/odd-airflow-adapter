@@ -1,7 +1,6 @@
 ## ODD Airflow adapter
 
 ODD Airflow adapter is used for extracting data transformers and data transformers runs info and metadata from Apache Airflow (versions up to 1.10.15). This adapter is implemetation of push model (see more https://github.com/opendatadiscovery/opendatadiscovery-specification/blob/main/specification/specification.md#discovery-models). After installation, your Airflow will push new data transformer on DAG creation, and data transformer runs on every DAG run.
-This service based on Python Flask and Connexion frameworks with APScheduler.
 
 #### Data entities:
 | Entity type | Entity source |
@@ -20,14 +19,9 @@ pip3 install odd-airflow
 ```Python
 from odd_airflow import DAG
 
-default_args = {  
-	# Your DAG arguments
-	"data_catalog_host": "https://yourcatalog.url/ingestion",
-	"cloud": {
-		"type": "aws",
-		"account": "account_id",
-		"region": "region_id"
-	}
+default_args = {
+	"data_catalog_url": "https://yourcatalog.url/ingestion", # Data catalog ingestion API url
+	"unit_id": "airflow_unit_id" # Host of Airflow source or any name for ODDRN generation (in order to uniquely identify Data entities)
 }
 
 dag = DAG(
@@ -40,22 +34,21 @@ dag = DAG(
 # Your tasks
 ```
 
+Alternatively you can define env variables:
 
-## Advanced configuration
-All configuration must be inside default_args parameter of DAG()
-```Python
-{
-	"data_catalog_host": "https://yourcatalog.url/ingestion", # Data catalog ingestion API url
-  	# You must specify one of - "cloud" or "hosts" params for ODDRN generation
-	"cloud": {
-		"type": "aws",   # Type of cloud (AWS by default)
-		"account": "account_id", # Specify account_id
-		"region": "region_id" # Specify region_id
-	},
-  	"hosts": ["192.168.0.1", "192.168.0.2"] # Host or hosts of Airflow source
-}
+```
+DATA_CATALOG_URL=https://yourcatalog.url/ingestion
+AIRFLOW_UNIT_ID=airflow_unit_id
 ```
 
 ## Requirements
 - Python 3.8
 - Airflow  <= 1.10.15
+
+## Run demo
+
+```
+  docker-compose -f docker/docker-compose.yml up
+```
+
+Airflow UI will be available at localhost:8081

@@ -1,0 +1,4 @@
+FROM apache/airflow:1.10.15-python3.7
+ADD ./setup.py ./setup.py
+ADD ./README.md ./README.md
+RUN pip install .

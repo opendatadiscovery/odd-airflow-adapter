@@ -1,0 +1,8 @@
+build
+dist
+docker/logs
+docker/database
+docker/plugins
+*.egg-info/
+*.egg
+**/__pycache__

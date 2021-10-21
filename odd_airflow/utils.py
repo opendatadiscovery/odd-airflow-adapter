@@ -4,7 +4,6 @@ import sqlparse
 from sqlparse.sql import T, TokenList, Parenthesis, Identifier, IdentifierList
 from sqlparse.tokens import Punctuation
 
-from .extractors import PostgresExtractor
 
 def _is_in_table(token):
     return _match_on(token, [
@@ -26,9 +25,10 @@ def _match_on(token, keywords):
     return token.match(T.Keyword, values=keywords)
 
 class Parser:
-    def __init__(self, task):
-        self.extractor = PostgresExtractor(task)
-        self._sql = task.sql
+    def __init__(self, extractor, task, sql):
+        self.extractor = extractor
+        self._task = task
+        self._sql = sql
         self._inputs = set()
         self._outputs = set()
         self._idx = None
@@ -118,10 +118,10 @@ class Parser:
         raise RuntimeError(f"Parens {parens} are not Parenthesis at index {gidx}")
 
     def get_inputs(self):
-        return self.extractor.get_oddrn_list(self._inputs)
+        return self.extractor.get_oddrn_list(self._task, self._inputs)
 
     def get_outputs(self):
-        return self.extractor.get_oddrn_list(self._outputs)
+        return self.extractor.get_oddrn_list(self._task, self._outputs)
 
 def get_transformer_name(dag_id: str, task_id: str) -> str:
     return f"{dag_id}.{task_id}"

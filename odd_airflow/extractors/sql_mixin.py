@@ -1,5 +1,8 @@
 from airflow.models import BaseOperator
+from odd_contract.models import DataTransformer
+
 from odd_airflow.utils import *
+
 
 class SqlMixin:
     def get_query(self, operator):
@@ -14,9 +17,9 @@ class SqlMixin:
         except AttributeError:
             self.log.error(f"Unable to get inputs and outputs for operator {operator.__class__.__name__}")
             inputs, outputs = [], []
-        return {
-                "source_code_url": "source",
-                "sql": sql,
-                "inputs": inputs,
-                "outputs": outputs
-            }
+        return DataTransformer(
+            source_code_url="source",
+            sql=sql,
+            inputs=inputs,
+            outputs=outputs
+        )

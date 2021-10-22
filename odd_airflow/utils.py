@@ -18,11 +18,14 @@ def _is_in_table(token):
         'RIGHT OUTER JOIN'
     ])
 
+
 def _is_out_table(token):
     return _match_on(token, ['INTO'])
 
+
 def _match_on(token, keywords):
     return token.match(T.Keyword, values=keywords)
+
 
 class Parser:
     def __init__(self, extractor, task, sql):
@@ -123,11 +126,14 @@ class Parser:
     def get_outputs(self):
         return self.extractor.get_oddrn_list(self._task, self._outputs)
 
+
 def get_transformer_name(dag_id: str, task_id: str) -> str:
     return f"{dag_id}.{task_id}"
 
+
 def get_transformer_run_name(run_id: str, task_id: str) -> str:
     return f"{run_id}.{task_id}"
+
 
 def get_props(obj, exclude_list: list = None) -> dict:
     response = {}

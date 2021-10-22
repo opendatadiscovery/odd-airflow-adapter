@@ -1,0 +1,35 @@
+[tool.poetry]
+name = "odd-airflow"
+version = "0.1.2"
+description = "Open Data Discovery adapter to Airflow"
+authors = ["Open Data Discovery <pypi@opendatadiscovery.org>"]
+license = "Apache-2.0"
+readme = "README.md"
+homepage = "https://github.com/opendatadiscovery/odd-airflow-adapter"
+repository = "https://github.com/opendatadiscovery/odd-airflow-adapter"
+keywords = ["odd-airflow"]
+include = ["LICENSE"]
+
+[[tool.poetry.source]]
+name = "main"
+url = "https://test.pypi.org/simple/"
+secondary = true
+
+[[tool.poetry.source]]
+name = "test"
+url = "https://test.pypi.org/simple/"
+
+[tool.poetry.dependencies]
+python = "^3.7"
+oddrn-generator = "^0.1.13"
+odd-contract-dev = "^1.0.5"
+attrs = "^20.3"
+requests = "^2.24.0"
+sqlparse = "0.4.2"
+
+
+[tool.poetry.dev-dependencies]
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"

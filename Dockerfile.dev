@@ -1,4 +1,5 @@
 FROM apache/airflow:1.10.15-python3.7
-ADD ./setup.py ./setup.py
+ADD ./pyproject.toml ./pyproject.toml
 ADD ./README.md ./README.md
-RUN pip install .
+ADD ./odd_airflow ./odd_airflow
+RUN pip install . --extra-index-url https://test.pypi.org/simple/

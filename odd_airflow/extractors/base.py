@@ -1,11 +1,11 @@
-from datetime import datetime
 from abc import ABC
+from datetime import datetime
 from typing import List
 
 from airflow.hooks.base_hook import BaseHook
 from airflow.models import BaseOperator, TaskInstance, DagRun
 from airflow.version import version as AIRFLOW_VERSION
-from odd_contract.models import DataEntityType, DataEntity, DataTransformerRun, MetadataExtension, Status
+from odd_models.models import DataEntityType, DataEntity, DataTransformerRun, MetadataExtension, Status
 from pkg_resources import parse_version
 
 from odd_airflow.metadata import Metadata, EntityTypes

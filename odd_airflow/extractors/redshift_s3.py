@@ -2,7 +2,7 @@ from typing import List
 
 from airflow.operators.redshift_to_s3_operator import RedshiftToS3Transfer
 from airflow.operators.s3_to_redshift_operator import S3ToRedshiftTransfer
-from odd_contract.models import DataTransformer
+from odd_models.models import DataTransformer
 from oddrn_generator import RedshiftGenerator
 
 from odd_airflow.extractors.base import BaseExtractor

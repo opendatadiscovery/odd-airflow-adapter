@@ -1,5 +1,5 @@
 from airflow.models import BaseOperator
-from odd_contract.models import DataTransformer
+from odd_models.models import DataTransformer
 
 from odd_airflow.utils import *
 

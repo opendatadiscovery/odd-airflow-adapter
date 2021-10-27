@@ -5,7 +5,7 @@ import requests
 from airflow.models import DAG
 from airflow.utils.db import provide_session
 from airflow.version import version as AIRFLOW_VERSION
-from odd_contract.models import DataEntityList, DataEntity
+from odd_models.models import DataEntityList, DataEntity
 from oddrn_generator import AirflowGenerator
 from pkg_resources import parse_version
 

@@ -10,19 +10,10 @@ repository = "https://github.com/opendatadiscovery/odd-airflow-adapter"
 keywords = ["odd-airflow"]
 include = ["LICENSE"]
 
-[[tool.poetry.source]]
-name = "main"
-url = "https://test.pypi.org/simple/"
-secondary = true
-
-[[tool.poetry.source]]
-name = "test"
-url = "https://test.pypi.org/simple/"
-
 [tool.poetry.dependencies]
 python = "^3.7"
 oddrn-generator = "^0.1.13"
-odd-contract-dev = "^1.0.5"
+odd-models = "^1.0.0"
 attrs = "^20.3"
 requests = "^2.24.0"
 sqlparse = "0.4.2"

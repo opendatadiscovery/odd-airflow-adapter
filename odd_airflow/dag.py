@@ -12,11 +12,6 @@ from pkg_resources import parse_version
 from odd_airflow.extractors.extractors import Extractors
 from odd_airflow.settings import DATA_CATALOG_URL, AIRFLOW_UNIT_ID
 
-# Corrects path of import for Airflow different versions
-if parse_version(AIRFLOW_VERSION) >= parse_version("1.10.11"):
-    pass
-else:
-    pass
 
 extractor_mapper = Extractors()
 

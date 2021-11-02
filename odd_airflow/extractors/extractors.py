@@ -1,14 +1,14 @@
 from typing import Type, Optional
+
+from airflow.version import version as AIRFLOW_VERSION
 from pkg_resources import parse_version
 
 from odd_airflow.extractors.base import BaseExtractor
-from odd_airflow.extractors.postgres import PostgresExtractor
+from odd_airflow.extractors.hive import HiveExtractor
 from odd_airflow.extractors.mysql import MySqlExtractor
+from odd_airflow.extractors.postgres import PostgresExtractor
 from odd_airflow.extractors.redshift_s3 import RedshiftS3Extractor
 from odd_airflow.extractors.snowflake import SnowflakeExtractor
-from odd_airflow.extractors.hive import HiveExtractor
-
-from airflow.version import version as AIRFLOW_VERSION
 
 if parse_version(AIRFLOW_VERSION) >= parse_version("2.0.0"):
     # Corrects path of import for Airflow versions below 1.10.11
@@ -19,6 +19,7 @@ else:
     # Corrects path of import for Airflow versions below 1.10.11
     from airflow.utils.log.logging_mixin import LoggingMixin
 
+
 _extractors = [
     PostgresExtractor,
     MySqlExtractor,
@@ -26,6 +27,7 @@ _extractors = [
     SnowflakeExtractor,
     HiveExtractor
 ]
+
 
 class Extractors(LoggingMixin):
     """

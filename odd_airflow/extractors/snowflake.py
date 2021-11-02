@@ -1,8 +1,10 @@
-from odd_airflow.extractors.sql_mixin import SqlMixin
 from typing import List
+
+from oddrn_generator import SnowflakeGenerator
+
 from odd_airflow.extractors.base import BaseExtractor
 from odd_airflow.extractors.sql_mixin import SqlMixin
-from oddrn import Generator
+
 
 class SnowflakeExtractor(BaseExtractor, SqlMixin):
 
@@ -11,13 +13,12 @@ class SnowflakeExtractor(BaseExtractor, SqlMixin):
         return ['SnowflakeOperator']
 
     def get_oddrn_list(self, task, tables):
-        response = []
         connection = self.get_connection(task.snowflake_conn_id)
         warehouse = task.warehouse or connection.warehouse
         database = task.database or connection.database
         schema = task.schema or connection.schema
-        generator = Generator(data_source='snowflake', host=f"{connection.account}.{connection.region}.snowflakecomputing.com")
-        for table in tables:
-            oddrn = generator.get_table(warehouse_name=warehouse, database_name=database, schema_name=schema, table_name=table)
-            response.append(oddrn)
-        return response
+        generator = SnowflakeGenerator(
+            host_settings=f"{connection.account}.{connection.region}.snowflakecomputing.com",
+            warehouses=warehouse, databases=database, schemas=schema
+        )
+        return [generator.get_oddrn_by_path("tables", table) for table in tables]

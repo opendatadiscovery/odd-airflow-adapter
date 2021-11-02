@@ -1,15 +1,17 @@
+from dataclasses import dataclass, field
 from enum import Enum
 from typing import Optional
-from dataclasses import dataclass, field
 
 from airflow.models import BaseOperator, TaskInstance
 
 from .settings import METADATA_SCHEMA_URL
 from .utils import get_props
 
+
 class EntityTypes(Enum):
     TRANSFORMER = "data_transformer"
     TRANSFORMER_RUN = "data_transformer_run"
+
 
 @dataclass
 class Metadata:

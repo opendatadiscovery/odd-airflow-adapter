@@ -20,7 +20,7 @@ pip3 install odd-airflow
 from odd_airflow import DAG
 
 default_args = {
-	"data_catalog_url": "https://yourcatalog.url/ingestion", # Data catalog ingestion API url
+	"data_catalog_base_url": "https://yourcatalog.url", # Data catalog ingestion API url
 	"unit_id": "airflow_unit_id" # Host of Airflow source or any name for ODDRN generation (in order to uniquely identify Data entities)
 }
 
@@ -37,7 +37,7 @@ dag = DAG(
 Alternatively you can define env variables:
 
 ```
-DATA_CATALOG_URL=https://yourcatalog.url/ingestion
+DATA_CATALOG_base_URL=https://yourcatalog.url
 AIRFLOW_UNIT_ID=airflow_unit_id
 ```
 

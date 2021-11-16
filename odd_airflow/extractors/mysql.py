@@ -16,7 +16,7 @@ class MySqlExtractor(BaseExtractor, SqlMixin):
         response = []
         connection = self.get_connection(task.mysql_conn_id)
         generator = MysqlGenerator(
-            host_settings=f"{connection.host}:{connection.port}", databases=task.database or connection.schema
+            host_settings=f"{connection.host}", databases=task.database or connection.schema
         )
         for table in tables:
             source = table.split(".")

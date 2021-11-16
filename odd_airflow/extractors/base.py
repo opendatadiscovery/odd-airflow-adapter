@@ -2,6 +2,7 @@ from abc import ABC
 from datetime import datetime
 from typing import List
 
+import pytz as pytz
 from airflow.hooks.base_hook import BaseHook
 from airflow.models import BaseOperator, TaskInstance, DagRun
 from airflow.version import version as AIRFLOW_VERSION
@@ -74,7 +75,8 @@ class BaseExtractor(ABC, LoggingMixin):
             type=DataEntityType.JOB_RUN,
             data_transformer_run=DataTransformerRun(
                 transformer_oddrn=dag.oddrn_generator.get_oddrn_by_path("tasks", task_instance.task_id),
-                start_time=start_date or datetime.utcnow(),  # todo: DataEntityType.start_time is required
+                # todo: DataEntityType.start_time is required
+                start_time=start_date or datetime.now(tz=pytz.utc).isoformat(),
                 end_time=end_date,
                 status=DAGRUN_STATE_TO_ODD_STATUS.get(dagrun.state, Status.UNKNOWN),
                 status_reason=reason or ''

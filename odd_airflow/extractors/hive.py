@@ -19,7 +19,7 @@ class HiveExtractor(BaseExtractor, SqlMixin):
         response = []
         connection = self.get_connection(task.hive_cli_conn_id)
         generator = HiveGenerator(
-            host_settings=f"{connection.host}:{connection.port}", databases=connection.schema
+            host_settings=f"{connection.host}", databases=connection.schema
         )
         for table in tables:
             source = table.split(".")

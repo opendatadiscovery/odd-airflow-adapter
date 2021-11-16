@@ -16,7 +16,7 @@ class PostgresExtractor(BaseExtractor, SqlMixin):
         response = []
         connection = self.get_connection(task.postgres_conn_id)
         generator = PostgresqlGenerator(
-            host_settings=f"{connection.host}:{connection.port}", databases=task.database or connection.schema
+            host_settings=f"{connection.host}", databases=task.database or connection.schema
         )
         for table in tables:
             source = table.split(".")

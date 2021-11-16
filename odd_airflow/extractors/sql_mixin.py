@@ -1,7 +1,7 @@
 from airflow.models import BaseOperator
 from odd_models.models import DataTransformer
 
-from odd_airflow.utils import *
+from odd_airflow.utils import SqlParser
 
 
 class SqlMixin:
@@ -12,7 +12,7 @@ class SqlMixin:
         sql = ""
         try:
             sql = self.get_query(operator)
-            sql_parser = Parser(self, operator, sql)
+            sql_parser = SqlParser(self, operator, sql)
             inputs, outputs = sql_parser.get_response()
         except AttributeError:
             self.log.error(f"Unable to get inputs and outputs for operator {operator.__class__.__name__}")

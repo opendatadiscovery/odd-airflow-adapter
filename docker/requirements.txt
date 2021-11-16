@@ -1,2 +1,1 @@
---extra-index-url https://test.pypi.org/simple/
-odd_airflow==0.1.2
+odd_airflow==0.1.3

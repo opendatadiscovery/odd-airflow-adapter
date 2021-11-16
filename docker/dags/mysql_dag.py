@@ -32,7 +32,7 @@ with DAG(
     schedule_interval="@once",
     catchup=False,
     default_args={
-        "data_catalog_url": "http://host.docker.internal:8080/ingestion/entities",
+        "data_catalog_base_url": "http://host.docker.internal:8080",
         "unit_id": "my_airflow_unit_id"
     }
 ) as dag:

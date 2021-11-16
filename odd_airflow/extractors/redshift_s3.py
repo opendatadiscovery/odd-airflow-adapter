@@ -24,7 +24,7 @@ class RedshiftS3Extractor(BaseExtractor):
     def get_table_oddrn(self, operator) -> str:
         connection = self.get_connection(operator.redshift_conn_id)
         generator = RedshiftGenerator(
-            host_settings=f"{connection.host}:{connection.port}",
+            host_settings=f"{connection.host}",
             databases=connection.schema, schemas=operator.schema, tables=operator.table
         )
         return generator.get_oddrn_by_path("tables")
